@@ -19,7 +19,7 @@ public class ReplyService {
     private final UserJPARepository userJPARepository;
 
     @Transactional
-    public ReplyResponse.DTO 댓글쓰기(ReplyRequest.SaveDTO reqDTO, SessionUser sessionUser) {
+    public ReplyResponse.DetailDTO 댓글쓰기(ReplyRequest.SaveDTO reqDTO, SessionUser sessionUser) {
         User user = userJPARepository.findById(sessionUser.getId()).orElseThrow();
 
         Board board = boardJPARepository.findById(reqDTO.getBoardId())
@@ -29,7 +29,7 @@ public class ReplyService {
 
         replyJPARepository.save(reply);
 
-        return new ReplyResponse.DTO(reply);
+        return new ReplyResponse.DetailDTO(reply, sessionUser.getId());
     }
 
     @Transactional
